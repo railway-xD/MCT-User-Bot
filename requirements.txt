@@ -15,4 +15,5 @@ openai==0.28
 beautifulsoup4
 google
 motor
-telegraph 
+telegraph
+prettytable
