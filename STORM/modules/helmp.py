@@ -21,7 +21,8 @@ async def edit_or_reply(message: Message, *args, **kwargs) -> Message:
 async def module_help(client: Client, message: Message):
     cmd = message.command
     help_arg = ""
-    bot_username = (await app.get_me()).username
+    # Fixed 'app' to 'client' to avoid the "Client has not been started yet" connection error
+    bot_username = (await client.get_me()).username
     if len(cmd) > 1:
         help_arg = " ".join(cmd[1:])
     elif not message.reply_to_message and len(cmd) == 1:
@@ -120,3 +121,4 @@ def add_command_help(module_name, commands):
                 command_dict[x[0]] = x[1]
 
     CMD_HELP[module_name] = command_dict
+    
