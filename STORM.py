@@ -1,10 +1,9 @@
-from config import API_ID, API_HASH, SESSIONS
-from pyrogram import Client, idle
-import sys
+import os
 import threading
+from config import API_ID, API_HASH, SESSIONS
 from flask import Flask
+from pyrogram import Client, idle
 
-# 1. Cloud platform health-check kosam mini Flask app
 app = Flask(__name__)
 
 
@@ -14,8 +13,9 @@ def home():
 
 
 def run_web():
-  # Railway/Render default ga 8080 port istundi
-  app.run(host="0.0.0.0", port=8080)
+  # Railway/Render dynamic PORT provide chesthe adhi tisukuntundhi, leda default 8080
+  port = int(os.environ.get("PORT", 8080))
+  app.run(host="0.0.0.0", port=port)
 
 
 CLIENTS = []
@@ -31,15 +31,11 @@ for i, SESSION in enumerate(SESSIONS):
     )
     CLIENTS.append(client)
 
-
 if __name__ == "__main__":
-  # 2. Flask server ni background thread lo start chestham (Railway port error raakunda)
   web_thread = threading.Thread(target=run_web)
   web_thread.daemon = True
   web_thread.start()
-  print("🌐 Flask Web Server started on port 8080")
 
-  # 3. Telegram Clients start chestham
   for i, CLIENT in enumerate(CLIENTS):
     try:
       CLIENT.start()
@@ -47,10 +43,8 @@ if __name__ == "__main__":
       print(f"ꜱᴛᴏʀᴍ ꜱᴛᴀʀᴛᴇᴅ ᴀꜱ ⚡......{i+1}")
       print(f"ʙᴏᴏᴛᴇᴅ/ꜱᴛᴀʀᴛᴇᴅ {CLIENT.me.first_name} 🎉")
     except Exception as e:
-      print(e)
-      print("ᴇxɪᴛɪɴɢ ᴛʜᴇ ᴘʀᴏɢʀᴀᴍ")
-      sys.exit(1)
+      print(f"Error starting client {i+1}: {e}")
 
-  print("ꜱᴛᴏʀᴍ ᴜꜱᴇʀ ʙᴏᴛ ɪꜱ ᴅᴇᴘʟᴏʏᴇᴅ ꜱᴜᴄᴄᴇꜱꜱꜰᴜʟﾙ 🌩️🥀")
+  print("ꜱᴛᴏʀᴍ ᴜꜱᴇʀ ʙᴏᴛ ɪꜱ ᴅᴇᴘʟᴏʏᴇᴅ ꜱᴜᴄᴄᴇꜱꜱꜰᴜʟʟʏ 🌩️🥀")
   idle()
-    
+  
