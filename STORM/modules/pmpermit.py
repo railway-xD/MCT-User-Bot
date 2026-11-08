@@ -66,8 +66,7 @@ async def setwarn(client, message):
         count = int(message.text.split()[1])
     except:
         return await message.edit(f"{hl}setwarns [ᴠᴀʟᴜᴇ]")
-    if count == 0:
-        return await message.edit("ɢɪᴠᴇ ᴍᴇ ᴠᴀʟᴜᴇ ᴛᴏ ꜱᴇᴛ ᴡᴀʀɴꜱ..")
+    # 0 allow చేశాం – first DM కి వెంటనే block
     await update_warns(count)
     await message.edit(f"ᴅᴍ ᴡᴀʀɴꜱ ꜱᴜᴄᴄᴇꜱꜱꜰᴜʟʟʏ ꜱᴇᴛ ᴛᴏ {count}..")
     
