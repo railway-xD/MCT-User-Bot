@@ -83,6 +83,7 @@ async def wtch(client, message):
         return
     await add_warn(message.from_user.id)
     if await limit() <= await get_warns(message.from_user.id):
+        await message.reply_sticker("CAACAgUAAxkBAAEINq5q8skQqHXKDMKAUXwn9vuCo3e-ywACAhEAAhOXuVTwqbn2HUd5dz0E")
         await message.reply("This account has DM Security Bot enabled. Anybody who sends me a message will automatically be blocked.")
         await reset_warns(message.from_user.id)
         return await client.block_user(message.from_user.id)
